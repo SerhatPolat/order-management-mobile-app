@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import Login from "./components/login";
+import Login from "./components/Login";
+import Header from "./components/Header";
 
 export default function App() {
   const [username, setUsername] = useState("");
@@ -20,14 +21,12 @@ export default function App() {
   } else {
     return (
       <View style={styles.container}>
-        <Text>{username} logged in!!!</Text>
-        <Pressable
-          onPress={() => {
+        <Header
+          onLogout={() => {
             setLoggedIn(false);
           }}
-        >
-          <Text>Logout</Text>
-        </Pressable>
+          name={username}
+        />
       </View>
     );
   }

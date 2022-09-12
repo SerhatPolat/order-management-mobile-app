@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Login from "./components/Login";
 import Header from "./components/Header";
+import Orders from "./components/Orders";
 
 export default function App() {
   const [username, setUsername] = useState("");
@@ -27,6 +28,8 @@ export default function App() {
           }}
           name={username}
         />
+
+        <Orders />
       </View>
     );
   }

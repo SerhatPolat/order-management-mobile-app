@@ -12,7 +12,7 @@ export default function App() {
     return (
       <View style={styles.container}>
         <Login
-          onUsernameChange={(newText) => setUsername(newText)}
+          onUsernameChange={(x) => setUsername(x)}
           onBtnPress={() => {
             setLoggedIn(true);
           }}

@@ -24,12 +24,12 @@ const Orders = () => {
 
   function addNewOrder() {
     setOrders([
-      ...orders,
       {
         description: descriptionInput,
         price: priceInput,
         date: new Date().toLocaleString(),
       },
+      ...orders,
     ]);
 
     setDescriptionInput("");
@@ -38,15 +38,33 @@ const Orders = () => {
     setModalVisible(false);
   }
 
+  function handleDelete(date) {
+    const newOrderList = orders.filter((order) => order.date !== date);
+
+    setOrders(newOrderList);
+  }
+
   return (
     <>
       <ScrollView style={styles.orderList}>
         {orders.map((order) => {
           return (
-            <View key={order.date} style={styles.orderBox}>
-              <Text>{order.description}</Text>
-              <Text>{order.price}</Text>
-              <Text>{order.date}</Text>
+            <View key={order.date}>
+              <View style={styles.orderBoxTop}>
+                <Text style={styles.text2}>{order.description}</Text>
+                <Text style={styles.text2}>${order.price}</Text>
+                <Pressable
+                  onPress={() => {
+                    handleDelete(order.date);
+                  }}
+                  style={styles.deleteBtn}
+                >
+                  <Icon name="trash-o" size={30} color="#000" />
+                </Pressable>
+              </View>
+              <View style={styles.orderBoxBottom}>
+                <Text style={styles.text1}>{order.date}</Text>
+              </View>
             </View>
           );
         })}
@@ -97,18 +115,23 @@ const styles = StyleSheet.create({
     bottom: 0,
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 80,
     width: "100%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
-  orderBox: {
-    width: "100%",
-    borderRadius: 10,
+  orderBoxTop: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     borderColor: "#6d2776",
     borderWidth: 2,
     padding: 10,
-    marginBottom: 15,
+  },
+  orderBoxBottom: {
+    backgroundColor: "#6d2776",
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    padding: 10,
+    marginBottom: 20,
   },
   plusBtn: {
     backgroundColor: "#6d2776",
@@ -117,10 +140,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 999,
+    borderColor: "#fff",
+    borderWidth: 2,
     position: "absolute",
     right: 30,
     bottom: 30,
     shadowColor: "#6d2776",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
     elevation: 10,
   },
   centeredView: {
@@ -138,6 +169,12 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     alignItems: "center",
     shadowColor: "#6d2776",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
     elevation: 10,
   },
   input: {
@@ -160,10 +197,18 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  text2: {
+    fontWeight: "bold",
+  },
   closeBtn: {
     position: "absolute",
     right: 10,
     top: 5,
+  },
+  deleteBtn: {
+    position: "absolute",
+    right: 10,
+    top: 10,
   },
 });
 
